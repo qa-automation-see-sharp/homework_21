@@ -3,7 +3,7 @@ using Test.Utils.PageObjects;
 
 namespace Test.Utils.Fixtures;
 
-public class BrowserSetUp
+public class BrowserSetUpBuilder
 {
     private BrowserType Type { get; set; } = BrowserType.Chromium;
     private readonly string _date = $"{DateTime.Now:MM-dd-yy}";
@@ -51,55 +51,55 @@ public class BrowserSetUp
         await Page!.ScreenshotAsync(new() { Path = finalPath });
     }
 
-    public BrowserSetUp WithBrowser(BrowserType type)
+    public BrowserSetUpBuilder WithBrowser(BrowserType type)
     {
         Type = type;
         return this;
     }
 
-    public BrowserSetUp InHeadlessMode(bool headless)
+    public BrowserSetUpBuilder InHeadlessMode(bool headless)
     {
         _browserTypeLaunchOptions.Headless = headless;
         return this;
     }
 
-    public BrowserSetUp WithChannel(string channel)
+    public BrowserSetUpBuilder WithChannel(string channel)
     {
         _browserTypeLaunchOptions.Channel = channel;
         return this;
     }
 
-    public BrowserSetUp WithSlowMo(int slowMo)
+    public BrowserSetUpBuilder WithSlowMo(int slowMo)
     {
         _browserTypeLaunchOptions.SlowMo = slowMo;
         return this;
     }
 
-    public BrowserSetUp WithTimeout(int timeout)
+    public BrowserSetUpBuilder WithTimeout(int timeout)
     {
         _browserTypeLaunchOptions.Timeout = timeout;
         return this;
     }
 
-    public BrowserSetUp WithArgs(params string[] args)
+    public BrowserSetUpBuilder WithArgs(params string[] args)
     {
         _browserTypeLaunchOptions.Args = args;
         return this;
     }
 
-    public BrowserSetUp WithLocale(string locale)
+    public BrowserSetUpBuilder WithLocale(string locale)
     {
         _browserNewContextOptions.Locale = locale;
         return this;
     }
 
-    public BrowserSetUp WithColorScheme(ColorScheme colorScheme)
+    public BrowserSetUpBuilder WithColorScheme(ColorScheme colorScheme)
     {
         _browserNewContextOptions.ColorScheme = colorScheme;
         return this;
     }
 
-    public BrowserSetUp WithViewportSize(int width, int height)
+    public BrowserSetUpBuilder WithViewportSize(int width, int height)
     {
         var viewportSize = new ViewportSize
         {
@@ -110,7 +110,7 @@ public class BrowserSetUp
         return this;
     }
 
-    public BrowserSetUp WithVideoSize(int width, int height)
+    public BrowserSetUpBuilder WithVideoSize(int width, int height)
     {
         _browserNewContextOptions.RecordVideoSize = new()
         {
@@ -119,7 +119,7 @@ public class BrowserSetUp
         return this;
     }
 
-    public BrowserSetUp SaveVideo(string path)
+    public BrowserSetUpBuilder SaveVideo(string path)
     {
         _browserNewContextOptions.RecordVideoDir = $"{_date}/{_time}/" + path;
         return this;
