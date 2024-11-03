@@ -8,7 +8,7 @@ namespace Test.Utils.PageObjects
         public string Url { get; } = "https://demoqa.com/broken";
         public string ExpectedTitle { get; } = "Broken Links - Images";
 
-        public ILocator Title => Page!.Locator($"xpath=//h1[text()='{ExpectedTitle}']");
+        public ILocator Title => Page!.Locator($"xpath=//h1[text()='Broken Links - Images']");
         public ILocator ValidImageText => Page!.GetByText("text='Valid image'");
         public ILocator BrokenImageText => Page!.GetByText("text='Broken image'");
         public ILocator ValidLinkText => Page!.GetByText("text='Valid Link'");

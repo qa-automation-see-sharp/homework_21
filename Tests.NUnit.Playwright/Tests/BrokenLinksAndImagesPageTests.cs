@@ -1,6 +1,7 @@
+using Microsoft.Playwright;
+using NUnit.Framework.Interfaces;
 using Test.Utils.Fixtures;
 using Test.Utils.PageObjects;
-using NUnit.Framework.Interfaces;
 using BrowserType = Test.Utils.Fixtures.BrowserType;
 
 namespace Tests.NUnit.Playwright.Tests;
@@ -37,7 +38,7 @@ public class BrokenLinksAndImagesPageTests
     }
 
     [Test]
-    public async Task OpenButtonsPage()
+    public async Task OpenBrokenPage()
     {
         var title = await Page!.Title.TextContentAsync();
 
@@ -58,7 +59,7 @@ public class BrokenLinksAndImagesPageTests
     public async Task ClickOnValidLink()
     {
         await Page.ValidLink.ClickAsync();
-        Assert.That(Page.Page.Url, Is.EqualTo("https://demoqa.com/"));
+        Assert.That(_browserSetUp.Page.Url, Is.EqualTo("https://demoqa.com/"));
     }
 
     [Test]
