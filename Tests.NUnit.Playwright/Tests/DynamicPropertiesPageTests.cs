@@ -10,7 +10,7 @@ namespace Tests.NUnit.Playwright.Tests;
 [TestFixture]
 public class DynamicPropertiesPageTests : PageTest
 {
-     private readonly BrowserSetUpBuilder _browserSetUp = new();
+    private readonly BrowserSetUpBuilder _browserSetUp = new();
     private DynamicPropertiesPage? Page { get; set; }
 
     [OneTimeSetUp]
@@ -26,15 +26,16 @@ public class DynamicPropertiesPageTests : PageTest
             .SaveVideo("videos/")
             .WithArgs("--start-maximized")
             .OpenNewPage<DynamicPropertiesPage>();
+            _browserSetUp.AddRequestResponseLogger();
+        await Page!.Open();
     }
 
     [SetUp]
     public async Task SetUp()
     {
-        _browserSetUp.AddRequestResponseLogger();
-        await Page!.Open();
         var traceName = TestContext.CurrentContext.Test.ClassName + "/" + TestContext.CurrentContext.Test.Name;
         await _browserSetUp.StartTracing(traceName);
+        await _browserSetUp.Page.ReloadAsync();
     }
 
     [Test]
