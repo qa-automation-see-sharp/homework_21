@@ -17,7 +17,7 @@ public class LinksPageTests : PageTest
     public async Task OneTimeSetUp()
     {
         Page = await _browserSetUp
-            //.WithBrowser(BrowserType.Chromium)
+            .WithBrowser(Test.Utils.Fixtures.BrowserType.Chromium)
             .WithChannel("chrome")
             .InHeadlessMode(false)
             .WithSlowMo(100)
