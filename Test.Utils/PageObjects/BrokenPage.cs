@@ -14,7 +14,7 @@ namespace Test.Utils.PageObjects
         public ILocator ValidLinkText => Page!.GetByText("text='Valid Link'");
         public ILocator BrokenLinkText => Page!.GetByText("text='Broken Link'");
         public ILocator ValidImage => Page!.Locator("p~img[src='/images/Toolsqa.jpg']");
-        public ILocator BrokenImage => Page!.Locator("p~img[src='/images/Toolsqa_1.jpg");
+        public ILocator BrokenImage => Page!.Locator("p~img[src='/images/Toolsqa_1.jpg']");
         public ILocator ValidLink => Page!.GetByRole(AriaRole.Link, new() { Name = "Click Here for Valid Link" });
         public ILocator BrokenLink => Page!.GetByRole(AriaRole.Link, new() { Name = "Click Here for Broken Link" });
 

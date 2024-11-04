@@ -58,7 +58,7 @@ public class ButtonsPageTests
         {
             Assert.That(isVisible, Is.True);
             Assert.That(isButtonEnabled, Is.True);
-            Assert.That(textOutput, Is.EqualTo("You double clicked the button!"));
+            Assert.That(textOutput, Is.EqualTo("You have done a double click"));
         });
     }
 
@@ -76,7 +76,7 @@ public class ButtonsPageTests
         {
             Assert.That(isVisible, Is.True);
             Assert.That(isButtonEnabled, Is.True);
-            Assert.That(textOutput, Is.EqualTo("You right clicked the button!"));
+            Assert.That(textOutput, Is.EqualTo("You have done a right click"));
         });
     }
 

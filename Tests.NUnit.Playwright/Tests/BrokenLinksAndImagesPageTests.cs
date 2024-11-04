@@ -50,8 +50,8 @@ public class BrokenLinksAndImagesPageTests
     {
         Assert.Multiple(async () =>
        {
-           Assert.That(Page.ImgsAndLinksVisible, Is.True);
-           Assert.That(Page.TextForElementsVisible, Is.True);
+            Assert.That(Page.ImgsAndLinksVisible, Is.True);
+            Assert.That(Page.TextForElementsVisible, Is.True);
        });
     }
 
@@ -65,7 +65,7 @@ public class BrokenLinksAndImagesPageTests
     [Test]
     public async Task ClickBrokenLink()
     {
-        await Page.ValidLink.ClickAsync();
+        await Page.BrokenLink.ClickAsync();
         Assert.That(Page.Page.Url, Is.EqualTo("http://the-internet.herokuapp.com/status_codes/500"));
     }
 

@@ -49,7 +49,7 @@ public class DynamicPropertiesPageTests : PageTest
     [Test]
     public async Task CheckEnabledButton()
     {
-        await Expect(Page.EnableButton).Not.ToBeEnabledAsync(new() { Timeout = 100 });
+        await Expect(Page.EnableButton).ToBeDisabledAsync(new() { Timeout = 4900 });
         await Expect(Page.EnableButton).ToBeEnabledAsync(); // Time to retry the assertion for in milliseconds. Defaults to 5000.
     }
 
@@ -63,7 +63,7 @@ public class DynamicPropertiesPageTests : PageTest
     [Test]
     public async Task CheckAppearingButton()
     {
-        await Expect(Page!.VisibleAfterButton).Not.ToBeVisibleAsync(new() {Timeout = 100});
+        await Expect(Page!.VisibleAfterButton).Not.ToBeVisibleAsync(new() {Timeout = 4900});
         await Expect(Page!.VisibleAfterButton).ToBeVisibleAsync();
     }
 

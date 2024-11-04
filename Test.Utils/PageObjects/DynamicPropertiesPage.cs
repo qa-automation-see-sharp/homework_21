@@ -13,7 +13,7 @@ namespace Test.Utils.PageObjects
         public string ExpectedTitle { get; } = "Dynamic Properties";
         
         public ILocator Title => Page!.Locator("xpath=//h1[text()='Dynamic Properties']");
-        public ILocator EnableButton => Page!.Locator("#enableAfter");
+        public ILocator EnableButton => Page!.Locator("button#enableAfter");
         public ILocator ColorButton => Page!.Locator("#colorChange");
         public ILocator VisibleAfterButton => Page!.Locator("#visibleAfter");
 
