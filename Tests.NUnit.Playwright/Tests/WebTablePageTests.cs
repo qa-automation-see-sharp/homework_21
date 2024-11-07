@@ -23,4 +23,39 @@ public class WebTablePageTests
         
         await Page.Open();
     }
+    
+    [Test]
+    public async Task GoToWebTablePage_TitleIsCorrect()
+    {
+        var title = await Page.Title.TextContentAsync();
+
+        Assert.That(title, Is.EqualTo("Web Tables"));
+    }
+
+    [Test]
+    public async Task ClickAddButton_ReturnRegistrationForm()
+    {
+        await Page.ClickAddButton();
+        var registrationFormIsDisplayed = Page.RegistrationForm.IsVisibleAsync();
+        
+        Assert.That(registrationFormIsDisplayed, Is.True);
+    }
+
+    [Test]
+    public async Task FillInRegistrationForm_ReturnSavedData()
+    {
+        await Page.ClickAddButton();
+
+        await Page.EnterFirstName("Liuda");
+        await Page.EnterLastName("Test");
+        await Page.EnterEmail("test@test.com");
+        await Page.EnterAge("25");
+        await Page.EnterSalary("12345");
+        await Page.EnterDepartment("QA");
+
+        await Page.ClickSubmitButton();
+
+        var rows = Page.FindRows();
+        
+    }
 }

@@ -20,6 +20,8 @@ public partial class WebTablePage: IBasePage
     public ILocator SalaryInput => Page!.Locator("xpath=/html//input[@id='salary']");
     public ILocator DepartmentInput => Page!.Locator("xpath=/html//input[@id='department']");
     public ILocator SubmitButton => Page!.Locator("xpath=/html//button[@id='submit']");
+    public ILocator Rows => Page!.Locator("xpath=//div/div[contains(@class,'rt-tr -odd') or contains(@class,'rt-tr -even')]");
+    public ILocator Columns => Page!.Locator("xpath=//div[@class='rt-resizable-header-content']");
     public ILocator DeleteFirstRecordButton => Page!.Locator("id=delete-record-1");
     public ILocator AgeHeader => Page!.Locator("//div[@class='rt-resizable-header-content' and text()='Age']");
     
@@ -74,6 +76,20 @@ public partial class WebTablePage: IBasePage
     public async Task<WebTablePage> ClickSubmitButton()
     {
         await SubmitButton.ClickAsync();
+        return this;
+    }
+
+    public async Task<WebTablePage> SortByAge()
+    {
+        await AgeHeader.ClickAsync();
+        return this;
+    }
+
+    public async Task<WebTablePage> FindRows()
+    {
+        var rows = await Rows.AllAsync();
+        
+        
         return this;
     }
 }
