@@ -26,13 +26,14 @@ public class BrokenLinksAndImagesPageTests
             .SaveVideo("videos/")
             .WithArgs("--start-maximized")
             .OpenNewPage<BrokenPage>();
-        _browserSetUp.AddRequestResponseLogger();
-        await Page!.Open();
     }
 
     [SetUp]
     public async Task SetUp()
     {
+        _browserSetUp.AddRequestResponseLogger();
+        await Page!.Open();
+
         var traceName = TestContext.CurrentContext.Test.ClassName + "/" + TestContext.CurrentContext.Test.Name;
         await _browserSetUp.StartTracing(traceName);
     }

@@ -65,15 +65,11 @@ public class UploadDownloadPageTests : PageTest
         string sCurrentDirectory = Directory.GetCurrentDirectory();
         string sFile = Path.Combine(sCurrentDirectory, @"sampleFile.jpeg");  
         string sFilePath = Path.GetFullPath(sFile); 
-        await Page!.UploadButton.ClickAsync();
-        Page.Page!.FileChooser += async (tmp, e) =>
-        {
-            await e.SetFilesAsync(sFilePath);
-            await e.Element.ClickAsync();
-        };
+        await Page!.UploadButton.SetInputFilesAsync(sFilePath);
         
         var uploadedFilePath = await Page.FilePath.InnerTextAsync();
-        Assert.That(uploadedFilePath, Is.EqualTo(sFile));
+        var hardcodedPath = "C:\\fakepath\\sampleFile.jpeg";
+        Assert.That(uploadedFilePath, Is.EqualTo(hardcodedPath));
     }
 
     [TearDown]
