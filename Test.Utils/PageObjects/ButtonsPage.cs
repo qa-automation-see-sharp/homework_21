@@ -39,4 +39,10 @@ public partial class ButtonsPage : IBasePage
         await ClickMeButton.ClickAsync();
         return this;
     }
+    
+    public async Task<ButtonsPage> ClosePage()
+    {
+        await Page.CloseAsync();
+        return this;
+    }
 }
