@@ -5,10 +5,10 @@ namespace Test.Utils.PageObjects;
 public class DynamicPropertiesPage : IBasePage
     {
     public IPage? Page { get; set; }
-    public string Url { get; } = "https://demoqa.com/text-box";
-    public string ExpectedTitle { get; } = "Text Box";
+    public string Url { get; } = "https://demoqa.com/dynamic-properties";
+    public string ExpectedTitle { get; } = "Dynamic Properties";
     
-    public ILocator Title => Page!.Locator("xpath=//h1[text()='Text Box']");
+    public ILocator Title => Page!.Locator("xpath=//h1[text()='Dynamic Properties']");
     
     public async Task<DynamicPropertiesPage> Open()
     {
