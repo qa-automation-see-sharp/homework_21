@@ -48,11 +48,14 @@ public class BrokenLinksAndImagesPageTests
     [Test]
     public async Task VisibleElementsOnPage()
     {
-        Assert.Multiple(async () =>
-       {
-            Assert.That(Page.ImgsAndLinksVisible, Is.True);
-            Assert.That(Page.TextForElementsVisible, Is.True);
-       });
+        var imgAndLinksVisible = await Page.ImgsAndLinksVisible();
+        var textVisible = await Page.TextForElementsVisible();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(imgAndLinksVisible, Is.True);
+            Assert.That(textVisible, Is.True);
+        });
     }
 
     [Test]
@@ -67,6 +70,7 @@ public class BrokenLinksAndImagesPageTests
     {
         await Page.BrokenLink.ClickAsync();
         Assert.That(Page.Page.Url, Is.EqualTo("http://the-internet.herokuapp.com/status_codes/500"));
+        await Page.Page.GoBackAsync();
     }
 
     [TearDown]

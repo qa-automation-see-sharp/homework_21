@@ -26,11 +26,12 @@ namespace Test.Utils.PageObjects
 
         public async Task<bool> TextForElementsVisible()
         {
-            return
-                await ValidImageText.IsVisibleAsync() &&
-                await BrokenImageText.IsVisibleAsync() &&
-                await ValidImageText.IsVisibleAsync() &&
-                await BrokenLinkText.IsVisibleAsync();
+            var validImageText = await ValidImageText.IsVisibleAsync();
+            var brokenImageText = await BrokenImageText.IsVisibleAsync();
+            var validLinkText = await ValidLinkText.IsVisibleAsync();
+            var brokenLinkText = await BrokenLinkText.IsVisibleAsync();
+
+            return validImageText && brokenImageText && validLinkText && brokenLinkText;
         }
 
         public async Task<bool> ImgsAndLinksVisible()

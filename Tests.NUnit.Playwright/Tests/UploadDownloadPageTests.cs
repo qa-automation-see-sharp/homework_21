@@ -1,3 +1,4 @@
+using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 using NUnit.Framework.Interfaces;
 using Test.Utils.Fixtures;
@@ -61,14 +62,16 @@ public class UploadDownloadPageTests : PageTest
     [Test]
     public async Task CheckUpload()
     {   
-        string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string sCurrentDirectory = Directory.GetCurrentDirectory();
         string sFile = Path.Combine(sCurrentDirectory, @"sampleFile.jpeg");  
         string sFilePath = Path.GetFullPath(sFile); 
-        await Page.UploadButton.ClickAsync();
-
-        var fileInput = Page.Page.Locator("input[type='file']");
-        await fileInput.SetInputFilesAsync(sFilePath);
-
+        await Page!.UploadButton.ClickAsync();
+        Page.Page!.FileChooser += async (tmp, e) =>
+        {
+            await e.SetFilesAsync(sFilePath);
+            await e.Element.ClickAsync();
+        };
+        
         var uploadedFilePath = await Page.FilePath.InnerTextAsync();
         Assert.That(uploadedFilePath, Is.EqualTo(sFile));
     }

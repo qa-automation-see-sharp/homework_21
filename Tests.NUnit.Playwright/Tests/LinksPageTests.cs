@@ -11,12 +11,12 @@ namespace Tests.NUnit.Playwright.Tests;
 public class LinksPageTests : PageTest
 {
     private readonly BrowserSetUpBuilder _browserSetUp = new();
-    private LinksPage? Page { get; set; }
+    private LinksPage? linksPage { get; set; }
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        Page = await _browserSetUp
+        linksPage = await _browserSetUp
             .WithBrowser(Test.Utils.Fixtures.BrowserType.Chromium)
             .WithChannel("chrome")
             .InHeadlessMode(false)
@@ -27,7 +27,7 @@ public class LinksPageTests : PageTest
             .WithArgs("--start-maximized")
             .OpenNewPage<LinksPage>();
         _browserSetUp.AddRequestResponseLogger();
-        await Page!.Open();
+        await linksPage!.Open();
     }
 
     [SetUp]
@@ -40,41 +40,48 @@ public class LinksPageTests : PageTest
     [Test]
     public async Task OpenLinksPage()
     {
-        var title = await Page!.Title.TextContentAsync();
+        var title = await linksPage!.Title.TextContentAsync();
 
-        Assert.That(title, Is.EqualTo(Page!.ExpectedTitle));
+        Assert.That(title, Is.EqualTo(linksPage!.ExpectedTitle));
     }
 
     [Test]
     public async Task LinksNotBeEmpty()
     {
-        var linksList = Page!.Links;
-        for (int i = 0; i < await linksList.CountAsync(); i++)
+        var linksList = linksPage!.Links;
+        var linksCount = await linksList.CountAsync();
+        List<string> links = new();
+        for (var i = 0; i < linksCount; i++)
         {
-            Assert.That(linksList.Nth(i).GetAttributeAsync("href"), Is.Not.Empty);
+            var url = await linksList.Nth(i).GetAttributeAsync("href") ?? string.Empty;
+            links.Add(url);
         }
+        Assert.Multiple(() =>
+        {
+            Assert.That(linksCount, Is.EqualTo(links.Count));
+        });
     }
     
     [Test]
     public async Task ClickOnHomeLink(){
+        
+        await linksPage!.HomeLink.ClickAsync();
+        await linksPage!.Page!.WaitForLoadStateAsync();
+        var url = linksPage.Page.Url;
 
-        var page = await _browserSetUp.Context.NewPageAsync();
-
-        await Page!.HomeLink.ClickAsync();
-        await page.WaitForLoadStateAsync();
-
-        Assert.That(page.Url.Equals("https://demoqa.com/"));
+        Assert.That(url, Is.EqualTo(linksPage.Url));
+        
     } 
 
     [Test]
     public async Task CheckResponseLink()
     {
-        await Page.CreatedLink.ClickAsync();
-        await Expect(Page.Response).ToHaveTextAsync("Link has responded with staus 201 and status text Created");
-        await Page.NoContentLink.ClickAsync();
-        await Expect(Page.Response).ToHaveTextAsync("Link has responded with staus 204 and status text No Content");
-        await Page.NotFoundLink.ClickAsync();
-        await Expect(Page.Response).ToHaveTextAsync("Link has responded with staus 404 and status text Not Found");
+        await linksPage.CreatedLink.ClickAsync();
+        await Expect(linksPage.Response).ToHaveTextAsync("Link has responded with staus 201 and status text Created");
+        await linksPage.NoContentLink.ClickAsync();
+        await Expect(linksPage.Response).ToHaveTextAsync("Link has responded with staus 204 and status text No Content");
+        await linksPage.NotFoundLink.ClickAsync();
+        await Expect(linksPage.Response).ToHaveTextAsync("Link has responded with staus 404 and status text Not Found");
     }
 
 
