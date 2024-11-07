@@ -10,4 +10,10 @@
       <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="TestFiles\NewFile1.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
