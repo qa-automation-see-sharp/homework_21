@@ -21,12 +21,13 @@ public class ButtonsPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<ButtonsPage>();
+        
+        await Page.Open();
     }
     
     [Test]
     public async Task GoToButtonsPage_TitleIsCorrect()
     {
-        await Page.Open();
         var title = await Page.Title.TextContentAsync();
 
         Assert.That(title, Is.EqualTo("Buttons"));
@@ -62,6 +63,7 @@ public class ButtonsPageTests
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
+        await _browserSetUpBuilder.Context!.CloseAsync();
         await Page.ClosePage();
     }
 }

@@ -22,14 +22,22 @@ public class TextBoxPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<TextBoxPage>();
+        
+        await Page.Open();
     }
     
     [Test]
     public async Task GoToTextBoxPage_TitleIsCorrect()
     {
-        await Page.Open();
         var title = await Page.Title.TextContentAsync();
 
         Assert.That(title, Is.EqualTo("Text Box"));
+    }
+    
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _browserSetUpBuilder.Context!.CloseAsync();
+        await Page.ClosePage();
     }
 }
