@@ -18,6 +18,7 @@ public class LinksPage: IBasePage
     public ILocator UnauthorizedLink => Page!.Locator("xpath=/html//a[@id='unauthorized']");
     public ILocator ForbiddenLink => Page!.Locator("xpath=/html//a[@id='forbidden']");
     public ILocator NotFoundLink => Page!.Locator("xpath=/html//a[@id='invalid-url']");
+    public ILocator ResponseMessage => Page!.Locator("#linkResponse");
     
     public async Task<LinksPage> Open()
     {
