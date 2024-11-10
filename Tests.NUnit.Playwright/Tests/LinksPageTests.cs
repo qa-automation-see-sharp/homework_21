@@ -3,7 +3,6 @@ using Test.Utils.PageObjects;
 
 namespace Tests.NUnit.Playwright.Tests;
 
-//TODO: cover with tests
 [TestFixture]
 public class LinksPageTests
 {
@@ -21,7 +20,7 @@ public class LinksPageTests
             .WithSlowMo(100)
             .WithArgs("--start-maximized")
             .OpenNewPage<LinksPage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
     
@@ -33,6 +32,15 @@ public class LinksPageTests
         Assert.That(title, Is.EqualTo("Links"));
     }
 
+    [Test]
+    public async Task ClickOnHomeLink_ReturnsCorrectTab()
+    {
+        await Page.HomeLink.ClickAsync();
+        var expectedPageUrl = Page.Url;
+
+        Assert.That(expectedPageUrl, Is.EqualTo(Page.Url));
+    }
+    
     [Test]
     public async Task ClickOnCreatedLink_ReturnsCorrectResponse()
     {
