@@ -18,6 +18,12 @@ public class DynamicPropertiesPage : IBasePage
         await Page!.GotoAsync(Url);
         return this;
     }
+
+    public async Task<bool> ClickEnabledAfterButton()
+    {
+        await EnableAfterButton.IsEnabledAsync();
+        return false;
+    }
     
     public async Task<DynamicPropertiesPage> ClosePage()
     {
