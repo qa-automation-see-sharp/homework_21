@@ -8,11 +8,11 @@ namespace Test.Utils.PageObjects
         public string Url { get; } = "https://demoqa.com/broken";
         public string ExpectedTitle { get; } = "Broken Links - Images";
 
-        public ILocator Title => Page!.Locator($"xpath=//h1[text()='Broken Links - Images']");
-        public ILocator ValidImageText => Page!.GetByText("text='Valid image'");
-        public ILocator BrokenImageText => Page!.GetByText("text='Broken image'");
-        public ILocator ValidLinkText => Page!.GetByText("text='Valid Link'");
-        public ILocator BrokenLinkText => Page!.GetByText("text='Broken Link'");
+        public ILocator Title => Page!.Locator("//h1[text()='Broken Links - Images']");
+        public ILocator ValidImageText => Page!.Locator("//p[text()= 'Valid image']");
+        public ILocator BrokenImageText => Page!.Locator("//p[text()= 'Broken image']");
+        public ILocator ValidLinkText => Page!.Locator("//p[text()= 'Valid Link']");
+        public ILocator BrokenLinkText => Page!.Locator("//p[text()= 'Broken Link']");
         public ILocator ValidImage => Page!.Locator("p~img[src='/images/Toolsqa.jpg']");
         public ILocator BrokenImage => Page!.Locator("p~img[src='/images/Toolsqa_1.jpg']");
         public ILocator ValidLink => Page!.GetByRole(AriaRole.Link, new() { Name = "Click Here for Valid Link" });
