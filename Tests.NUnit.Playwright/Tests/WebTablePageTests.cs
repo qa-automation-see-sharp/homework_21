@@ -16,7 +16,7 @@ public class WebTablePageTests
         Page = await _browserSetUpBuilder
             .WithBrowser(BrowserType.Chromium)
             .WithChannel("chrome")
-            .InHeadlessMode(false)
+            .InHeadlessMode(true)
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<WebTablePage>();
@@ -36,7 +36,9 @@ public class WebTablePageTests
     public async Task ClickAddButton_ReturnRegistrationForm()
     {
         await Page.ClickAddButton();
-        var registrationFormIsDisplayed = Page.RegistrationForm.IsVisibleAsync();
+        
+        //TODO: should await for async method
+        var registrationFormIsDisplayed = await Page.RegistrationForm.IsVisibleAsync();
         
         Assert.That(registrationFormIsDisplayed, Is.True);
     }
@@ -44,7 +46,8 @@ public class WebTablePageTests
     [Test]
     public async Task FillInRegistrationForm_ReturnSavedData()
     {
-        await Page.ClickAddButton();
+        //TODO: this action is redundant because it's already clicked in previous test
+        //await Page.ClickAddButton();
 
         await Page.EnterFirstName("Liuda");
         await Page.EnterLastName("Test");
@@ -57,5 +60,6 @@ public class WebTablePageTests
 
         var rows = Page.FindRows();
         
+        //TODO: Test supposed to have assertions
     }
 }

@@ -1,15 +1,15 @@
 using Test.Utils.Fixtures;
-using Test.Utils.PageObjects;
 
-namespace Tests.NUnit.Playwright.Tests;
+namespace Tests.NUnit.Playwright.Tests.LinksPageTests;
 
+//TODO: this set of test is better to run each test in separate browser or divide this test into 2 groups 
 [TestFixture]
-public class BrokenLinksAndImagesPageTests
+public class LinksThatLeadsToAnotherPage
 {
     private readonly BrowserSetUpBuilder _browserSetUpBuilder = new();
-    private BrokenLinksAndImagesPage Page { get; set; }
+    private Test.Utils.PageObjects.LinksPage Page { get; set; }
 
-    [SetUp]
+    [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
         Page = await _browserSetUpBuilder
@@ -17,39 +17,32 @@ public class BrokenLinksAndImagesPageTests
             .WithChannel("chrome")
             .InHeadlessMode(true)
             .WithTimeout(10000)
+            .WithSlowMo(100)
             .WithArgs("--start-maximized")
-            .OpenNewPage<BrokenLinksAndImagesPage>();
-        
+            .OpenNewPage<Test.Utils.PageObjects.LinksPage>();
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
-    
+
     [Test]
-    public async Task GoToButtonsPage_TitleIsCorrect()
+    public async Task GoToLinksPage_TitleIsCorrect()
     {
         var title = await Page.Title.TextContentAsync();
 
-        Assert.That(title, Is.EqualTo("Broken Links - Images"));
+        Assert.That(title, Is.EqualTo("Links"));
     }
-    
+
     [Test]
-    public async Task ClickOnValidLink_ReturnsCorrectTab()
+    public async Task ClickOnHomeLink_ReturnsCorrectTab()
     {
-        await Page.ValidLink.ClickAsync();
+        await Page.HomeLink.ClickAsync();
         var expectedPageUrl = Page.Url;
 
         Assert.That(expectedPageUrl, Is.EqualTo(Page.Url));
     }
-    
-    [Test]
-    public async Task ClickOnBrokenLink_ReturnsBrokenTab()
-    {
-        await Page.BrokenLink.ClickAsync();
-        await Task.Delay(3000);
 
-        Assert.That(Page.Page!.Url, Is.EqualTo(("http://the-internet.herokuapp.com/status_codes/500")));
-    }
-    
-    [TearDown]
+
+    [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
         await _browserSetUpBuilder.Context!.CloseAsync();

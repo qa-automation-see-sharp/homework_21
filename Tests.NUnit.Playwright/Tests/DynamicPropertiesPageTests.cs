@@ -10,13 +10,13 @@ public class DynamicPropertiesPageTests
     private DynamicPropertiesPage Page { get; set; }
     
 
-    [OneTimeSetUp]
+    [SetUp]
     public async Task OneTimeSetUp()
     {
         Page = await _browserSetUpBuilder
             .WithBrowser(BrowserType.Chromium)
             .WithChannel("chrome")
-            .InHeadlessMode(false)
+            .InHeadlessMode(true)
             .WithTimeout(10000)
             .WithSlowMo(100)
             .WithArgs("--start-maximized")
@@ -79,7 +79,7 @@ public class DynamicPropertiesPageTests
         Assert.That(isVisible, Is.True);
     }
     
-    [OneTimeTearDown]
+    [TearDown]
     public async Task OneTimeTearDown()
     {
         await _browserSetUpBuilder.Context!.CloseAsync();

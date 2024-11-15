@@ -9,7 +9,7 @@ public partial class WebTablePage: IBasePage
     public string Url { get; } = "https://demoqa.com/webtables";
     public string ExpectedTitle { get; } = "Web Tables";
     
-    public ILocator Title => Page!.Locator("xpath=//h1[contains(text(),\\\"Web Tables\\\")]");
+    public ILocator Title => Page!.Locator("xpath=//h1[contains(text(),'Web Tables')]");
     public ILocator Table => Page!.Locator("xpath=//div[@class='rt-tbody']");
     public ILocator AddButton => Page!.Locator("id=addNewRecordButton");
     public ILocator RegistrationForm => Page!.Locator("xpath=//div[@role='dialog']/div[@role='document']//div[@class='modal-header']");

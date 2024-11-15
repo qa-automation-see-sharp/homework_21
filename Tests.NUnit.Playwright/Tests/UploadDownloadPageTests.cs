@@ -15,7 +15,7 @@ public class UploadDownloadPageTests
         Page = await _browserSetUpBuilder
             .WithBrowser(BrowserType.Chromium)
             .WithChannel("chrome")
-            .InHeadlessMode(false)
+            .InHeadlessMode(true)
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<UploadDownloadPage>();

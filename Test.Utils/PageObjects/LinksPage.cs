@@ -32,4 +32,10 @@ public class LinksPage: IBasePage
         return this;
     }
     
+    
+    public async Task<LinksPage> CLickAndWaiteForRequest(Func<Task> action, Func<IResponse, bool> urlOrPredicate)
+    {
+        await Page!.RunAndWaitForResponseAsync(action, urlOrPredicate);
+        return this;
+    }
 }
