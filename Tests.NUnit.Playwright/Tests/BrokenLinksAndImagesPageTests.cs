@@ -35,7 +35,7 @@ public class BrokenLinksAndImagesPageTests
     public async Task ClickOnValidLink_ReturnsCorrectTab()
     {
         await Page.ValidLink.ClickAsync();
-        var expectedPageUrl = Page.Page!.Url;
+        var expectedPageUrl = Page.Url;
 
         Assert.That(expectedPageUrl, Is.EqualTo(Page.Url));
     }

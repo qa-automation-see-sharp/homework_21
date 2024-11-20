@@ -1,9 +1,10 @@
+using Microsoft.Playwright;
 using Test.Utils.Fixtures;
 using Test.Utils.PageObjects;
+using BrowserType = Test.Utils.Fixtures.BrowserType;
 
 namespace Tests.NUnit.Playwright.Tests;
 
-//TODO: cover with tests
 [TestFixture]
 public class WebTablePageTests
 {
@@ -37,8 +38,10 @@ public class WebTablePageTests
     {
         await Page.ClickAddButton();
         
-        //TODO: should await for async method
-        var registrationFormIsDisplayed = await Page.RegistrationForm.IsVisibleAsync();
+        var registrationForm = Page.RegistrationForm;
+        await registrationForm.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+       
+        bool registrationFormIsDisplayed = await registrationForm.IsVisibleAsync();
         
         Assert.That(registrationFormIsDisplayed, Is.True);
     }
@@ -46,9 +49,6 @@ public class WebTablePageTests
     [Test]
     public async Task FillInRegistrationForm_ReturnSavedData()
     {
-        //TODO: this action is redundant because it's already clicked in previous test
-        //await Page.ClickAddButton();
-
         await Page.EnterFirstName("Liuda");
         await Page.EnterLastName("Test");
         await Page.EnterEmail("test@test.com");
@@ -58,8 +58,24 @@ public class WebTablePageTests
 
         await Page.ClickSubmitButton();
 
-        var rows = Page.FindRows();
+        var filledRowsCount = await Page!.FindRows();
         
-        //TODO: Test supposed to have assertions
+        Assert.That(filledRowsCount?.Count, Is.EqualTo(4));
+     
+    }
+    
+    [Test]
+    public async Task SortByAge()
+    {
+        await Page.SortByAge();
+        
+        var rowOne = await Page!.GetRowValues(1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(rowOne[0], Is.EqualTo("Liuda"));
+            Assert.That(rowOne[2], Is.EqualTo("25"));
+
+        });
     }
 }

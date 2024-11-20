@@ -84,12 +84,31 @@ public partial class WebTablePage: IBasePage
         await AgeHeader.ClickAsync();
         return this;
     }
+    
+    public async Task<string[]> GetRowValues(int rowNumber)
+    {
+        var rowCells = Page!.Locator($"//div[@class='rt-tr-group'][{rowNumber}]//div[@role='gridcell']");
 
-    public async Task<WebTablePage> FindRows()
+        var input = (await rowCells.AllTextContentsAsync()).ToArray();
+
+        return input;
+    }
+
+    public async Task<List<string[]>> FindRows()
     {
         var rows = await Rows.AllAsync();
+        var rowsWithInput = new List<string[]>();
         
-        
-        return this;
+        foreach (var row in rows)
+        {
+            var cellValues = await row.Locator(Rows).AllTextContentsAsync();
+
+            if (cellValues.Any(cell => !string.IsNullOrWhiteSpace(cell)))
+            {
+                rowsWithInput.Add(cellValues.ToArray());
+            }
+        }
+
+        return rowsWithInput;
     }
 }
