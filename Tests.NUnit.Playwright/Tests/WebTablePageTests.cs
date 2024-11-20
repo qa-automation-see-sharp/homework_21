@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
 using Microsoft.Playwright;
 using NUnit.Framework.Interfaces;
 using Test.Utils.Fixtures;
@@ -23,6 +22,8 @@ public class WebTablePageTests
             .InHeadlessMode(false)
             .WithSlowMo(100)
             .WithTimeout(10000)
+            .WithVideoSize(1900, 1080)
+            .SaveVideo($"{_date}/videos/")
             .WithArgs("--start-maximized")
             .OpenNewPage<WebTablePage>();
         
@@ -99,7 +100,7 @@ public class WebTablePageTests
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
-        await _browserSetUpBuilder.Context!.CloseAsync();
         await Page.ClosePage();
+        await _browserSetUpBuilder.Context!.CloseAsync();
     }
 }
