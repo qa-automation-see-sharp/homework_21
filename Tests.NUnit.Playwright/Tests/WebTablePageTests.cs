@@ -29,6 +29,18 @@ public class WebTablePageTests
         
         await Page.Open();
     }
+
+    [SetUp]
+    public async Task SetUp()
+    {
+        await _browserSetUpBuilder.Context!.Tracing.StartAsync(new TracingStartOptions()
+        {
+            Title = TestContext.CurrentContext.Test.ClassName + "." + TestContext.CurrentContext.Test.Name,
+            Screenshots = true,
+            Snapshots = true,
+            Sources = true
+        });
+    }
     
     [Test]
     public async Task GoToWebTablePage_TitleIsCorrect()
@@ -95,6 +107,12 @@ public class WebTablePageTests
                 Path = $"{_date}/Screenshots/{testName}.png"
             });
         }
+        
+        await _browserSetUpBuilder.Context!.Tracing.StopAsync(new TracingStopOptions()
+        {
+            Path = Path.Combine(TestContext.CurrentContext.WorkDirectory, _date, "playwright-traces",
+                $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.Name}.zip")
+        });
     }
     
     [OneTimeTearDown]
