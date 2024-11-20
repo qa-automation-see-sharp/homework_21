@@ -26,7 +26,7 @@ public class WebTablePageTests
             .SaveVideo($"{_date}/videos/")
             .WithArgs("--start-maximized")
             .OpenNewPage<WebTablePage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
 

@@ -21,7 +21,7 @@ public class ButtonsPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<ButtonsPage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
     

@@ -19,7 +19,7 @@ public class BrokenLinksAndImagesPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<BrokenLinksAndImagesPage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
     

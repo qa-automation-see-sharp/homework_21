@@ -22,7 +22,7 @@ public class TextBoxPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<TextBoxPage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
     

@@ -19,7 +19,7 @@ public class UploadDownloadPageTests
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<UploadDownloadPage>();
-        
+        _browserSetUpBuilder.AddRequestResponseLogger();
         await Page.Open();
     }
     
