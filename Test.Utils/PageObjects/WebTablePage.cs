@@ -111,4 +111,10 @@ public partial class WebTablePage: IBasePage
 
         return rowsWithInput;
     }
+    
+    public async Task<WebTablePage> ClosePage()
+    {
+        await Page!.CloseAsync();
+        return this;
+    }
 }

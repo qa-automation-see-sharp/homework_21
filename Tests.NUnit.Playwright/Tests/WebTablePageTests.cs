@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.Playwright;
+using NUnit.Framework.Interfaces;
 using Test.Utils.Fixtures;
 using Test.Utils.PageObjects;
 using BrowserType = Test.Utils.Fixtures.BrowserType;
@@ -10,6 +12,7 @@ public class WebTablePageTests
 {
     private readonly BrowserSetUpBuilder _browserSetUpBuilder = new();
     private WebTablePage Page { get; set; }
+    private readonly string _date = $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}";
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
@@ -17,7 +20,8 @@ public class WebTablePageTests
         Page = await _browserSetUpBuilder
             .WithBrowser(BrowserType.Chromium)
             .WithChannel("chrome")
-            .InHeadlessMode(true)
+            .InHeadlessMode(false)
+            .WithSlowMo(100)
             .WithTimeout(10000)
             .WithArgs("--start-maximized")
             .OpenNewPage<WebTablePage>();
@@ -77,5 +81,25 @@ public class WebTablePageTests
             Assert.That(rowOne[2], Is.EqualTo("25"));
 
         });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+        {
+            var testName = TestContext.CurrentContext.Test.MethodName;
+            await _browserSetUpBuilder.Page!.ScreenshotAsync(new PageScreenshotOptions()
+            {
+                Path = $"{_date}/Screenshots/{testName}.png"
+            });
+        }
+    }
+    
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _browserSetUpBuilder.Context!.CloseAsync();
+        await Page.ClosePage();
     }
 }
