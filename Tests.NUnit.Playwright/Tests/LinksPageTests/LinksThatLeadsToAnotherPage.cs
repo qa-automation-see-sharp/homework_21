@@ -36,7 +36,7 @@ public class LinksThatLeadsToAnotherPage
     public async Task ClickOnHomeLink_ReturnsCorrectTab()
     {
         await Page.HomeLink.ClickAsync();
-        var expectedPageUrl = Page.Url;
+        var expectedPageUrl = Page.Page!.Url;
 
         Assert.That(expectedPageUrl, Is.EqualTo(Page.Url));
     }
