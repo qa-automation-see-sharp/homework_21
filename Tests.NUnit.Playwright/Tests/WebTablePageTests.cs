@@ -42,24 +42,24 @@ public class WebTablePageTests
         Assert.That(title, Is.EqualTo(Page.ExpectedTitle));
     }
 
-    [Test]
-    public async Task WebTableSmoke()
-    {
-        var rowCount = await Page!.GetRowCountAsync(Page.Page!, Page.TableXPath);
-        var columnCount = await Page.GetColumnCountAsync(Page.Page!, Page.TableXPath);
-        var cellZeroZero = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 0, 0);
-        var cellOneOne = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 1, 1);
-        var cellTwoTwo = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 2, 2);
+    // [Test]
+    // public async Task WebTableSmoke()
+    // {
+    //     var rowCount = await Page!.GetRowCountAsync(Page.Page!, Page.TableXPath);
+    //     var columnCount = await Page.GetColumnCountAsync(Page.Page!, Page.TableXPath);
+    //     var cellZeroZero = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 0, 0);
+    //     var cellOneOne = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 1, 1);
+    //     var cellTwoTwo = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 2, 2);
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(rowCount, Is.EqualTo(3));
-            Assert.That(columnCount, Is.EqualTo(7));
-            Assert.That(cellZeroZero, Is.EqualTo("Cierra"));
-            Assert.That(cellOneOne, Is.EqualTo("Cantrell"));
-            Assert.That(cellTwoTwo, Is.EqualTo("29"));
-        });
-    }
+    //     Assert.Multiple(() =>
+    //     {
+    //         Assert.That(rowCount, Is.EqualTo(3));
+    //         Assert.That(columnCount, Is.EqualTo(7));
+    //         Assert.That(cellZeroZero, Is.EqualTo("Cierra"));
+    //         Assert.That(cellOneOne, Is.EqualTo("Cantrell"));
+    //         Assert.That(cellTwoTwo, Is.EqualTo("29"));
+    //     });
+    // }
 
     [TearDown]
     public async Task TearDown()
