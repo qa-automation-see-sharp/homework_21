@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 .idea/
+.vs/
 
 # Build results
 
@@ -52,6 +53,7 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+
 
 # Visual Studio profiler
 *.psess
