@@ -8,7 +8,7 @@ namespace Tests.NUnit.Playwright.Tests;
 public class UploadDownloadPageTests
 {
     private readonly BrowserSetUpBuilder _browserSetUpBuilder = new();
-    private UploadAndDownloadPage Page { get; set; }
+    private UploadAndDownloadPage? Page { get; set; }
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
@@ -37,7 +37,7 @@ public class UploadDownloadPageTests
     [Test]
     public async Task OpenUploadAndDownloadPage()
     {
-        var title = await Page.Title.TextContentAsync();
+        var title = await Page!.Title.TextContentAsync();
 
         Assert.That(title, Is.EqualTo(Page.ExpectedTitle));
     }
@@ -47,7 +47,7 @@ public class UploadDownloadPageTests
     {
         var download = await _browserSetUpBuilder.Page!.RunAndWaitForDownloadAsync(async () =>
         {
-            await Page.DownloadButton.ClickAsync();
+            await Page!.DownloadButton.ClickAsync();
         });
 
         var downloadPath = await download.PathAsync();

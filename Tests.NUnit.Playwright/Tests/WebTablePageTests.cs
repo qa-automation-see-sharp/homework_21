@@ -8,7 +8,7 @@ namespace Tests.NUnit.Playwright.Tests;
 public class WebTablePageTests
 {
     private readonly BrowserSetUpBuilder _browserSetUpBuilder = new();
-    private WebTablePage Page { get; set; }
+    private WebTablePage? Page { get; set; }
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
@@ -37,7 +37,7 @@ public class WebTablePageTests
     [Test]
     public async Task OpenWebTablePage()
     {
-        var title = await Page.Title.TextContentAsync();
+        var title = await Page!.Title.TextContentAsync();
 
         Assert.That(title, Is.EqualTo(Page.ExpectedTitle));
     }
@@ -45,7 +45,7 @@ public class WebTablePageTests
     [Test]
     public async Task WebTableSmoke()
     {
-        var rowCount = await Page.GetRowCountAsync(Page.Page!, Page.TableXPath);
+        var rowCount = await Page!.GetRowCountAsync(Page.Page!, Page.TableXPath);
         var columnCount = await Page.GetColumnCountAsync(Page.Page!, Page.TableXPath);
         var cellZeroZero = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 0, 0);
         var cellOneOne = await Page.GetCellTextAsync(Page.Page!, Page.TableXPath, 1, 1);

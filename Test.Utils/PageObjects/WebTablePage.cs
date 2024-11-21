@@ -47,7 +47,7 @@ public class WebTablePage : IBasePage
         return this;
     }
 
-    public async Task<string> GetCellTextAsync(IPage page, string tableSelector, int rowIndex, int columnIndex)
+    public async Task<string?> GetCellTextAsync(IPage page, string tableSelector, int rowIndex, int columnIndex)
     {
         var rows = await page.QuerySelectorAllAsync($"xpath={tableSelector}/tr");
 
