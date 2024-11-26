@@ -51,6 +51,22 @@ public class WebTablePageTests
     }
     
     [Test]
+    public async Task CountTheTable_CountIsCorrect()
+    {
+        var rowsCount = await Page!.FindRows();
+        var columns = await Page!.Columns.CountAsync();
+
+        Assert.Multiple((() => 
+                
+                {
+                    Assert.That(rowsCount.Count, Is.EqualTo(3));
+                    Assert.That(columns, Is.EqualTo(7));
+                } 
+            
+            ));
+    }
+    
+    [Test]
     public async Task SortByAge()
     {
         await Page.SortByAge();
@@ -64,7 +80,6 @@ public class WebTablePageTests
 
         });
     }
-
     [Test]
     public async Task ClickAddButton_ReturnRegistrationForm()
     {
@@ -77,10 +92,9 @@ public class WebTablePageTests
         
         Assert.That(registrationFormIsDisplayed, Is.True);
     }
-
     [Test]
     public async Task FillInRegistrationForm_ReturnSavedData()
-    {
+    { 
         await Page.EnterFirstName("Liuda");
         await Page.EnterLastName("Test");
         await Page.EnterEmail("test@test.com");
