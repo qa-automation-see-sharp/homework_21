@@ -49,6 +49,21 @@ public class WebTablePageTests
 
         Assert.That(title, Is.EqualTo("Web Tables"));
     }
+    
+    [Test]
+    public async Task SortByAge()
+    {
+        await Page.SortByAge();
+        
+        var rowOne = await Page!.GetRowValues(1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(rowOne[0], Is.EqualTo("Kierra"));
+            Assert.That(rowOne[2], Is.EqualTo("29"));
+
+        });
+    }
 
     [Test]
     public async Task ClickAddButton_ReturnRegistrationForm()
@@ -79,21 +94,6 @@ public class WebTablePageTests
         
         Assert.That(filledRowsCount?.Count, Is.EqualTo(4));
      
-    }
-    
-    [Test]
-    public async Task SortByAge()
-    {
-        await Page.SortByAge();
-        
-        var rowOne = await Page!.GetRowValues(1);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(rowOne[0], Is.EqualTo("Liuda"));
-            Assert.That(rowOne[2], Is.EqualTo("25"));
-
-        });
     }
 
     [TearDown]
